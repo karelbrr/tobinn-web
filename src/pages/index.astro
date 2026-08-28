@@ -1,14 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import HorizontalScroll from '../components/HorizontalScroll.astro';
+import About from '../components/About.astro';
+import Tour from '../components/Tour.astro';
+import Audio from '../components/Audio.astro';
 import Booking from '../components/Booking.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="DJ TOBINN">
-  <main class="grow flex flex-col">
+<Layout title="TOBIN SOUND">
+  <main class="grow flex flex-col relative z-10">
     <Hero />
-    <HorizontalScroll />
+    <About />
+    <Tour />
+    <Audio />
     <Booking />
+    <Footer />
   </main>
 </Layout>
