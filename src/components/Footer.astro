@@ -34,9 +34,24 @@
       >
         '26
       </h2>
-      <p class="font-mono text-xs font-bold uppercase tracking-widest mt-4">
-        &copy; {new Date().getFullYear()} TOBIN SOUND.<br />ALL RIGHTS RESERVED.
-      </p>
+      <div
+        class="flex flex-col sm:flex-row items-start sm:items-end justify-between w-full mt-4 gap-4"
+      >
+        <p class="font-mono text-xs font-bold uppercase tracking-widest">
+          &copy; {new Date().getFullYear()} DJTOBINN.<br />ALL RIGHTS RESERVED.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black sm:text-right"
+        >
+          <a href="/privacy" class="hover:text-black transition-colors"
+            >PRIVACY_POLICY</a
+          >
+
+          <a href="/terms" class="hover:text-black transition-colors"
+            >TERMS_&_CONDITIONS</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 </footer>

@@ -1,5 +1,6 @@
 ---
 import '@fontsource/geist-sans';
+import '@fontsource/archivo-black';
 import "../styles/global.css";
 
 interface Props {
@@ -15,10 +16,8 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music. Booking for clubs and events." />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
     <style is:global>
       :root {
         --bg: #050505;
