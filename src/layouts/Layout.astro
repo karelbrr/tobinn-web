@@ -1,10 +1,10 @@
 ---
-import '@fontsource/geist-sans';
-import '@fontsource/archivo-black';
+import "@fontsource/geist-sans";
+import "@fontsource/archivo-black";
 import "../styles/global.css";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -16,7 +16,10 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music. Booking for clubs and events." />
+    <meta
+      name="description"
+      content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music. Booking for clubs and events."
+    />
     <title>{title}</title>
     <style is:global>
       :root {
@@ -26,14 +29,16 @@ const { title } = Astro.props;
       body {
         background-color: var(--bg);
         color: var(--fg);
-        font-family: 'Geist Sans', sans-serif;
+        font-family: "Geist Sans", sans-serif;
       }
-      h1, h2, h3, h4, .display-text {
-        font-family: 'Archivo Black', sans-serif;
+      h1,
+      h2,
+      h3,
+      h4,
+      .display-text {
+        font-family: "Archivo Black", sans-serif;
         text-transform: uppercase;
       }
-      
-
 
       ::selection {
         background-color: #ffffff;
@@ -41,11 +46,12 @@ const { title } = Astro.props;
       }
     </style>
   </head>
-  <body class="antialiased selection:bg-[#ffffff] selection:text-[#050505] border-x border-white/20 max-w-[1600px] mx-auto min-h-screen flex flex-col relative">
-
+  <body
+    class="antialiased selection:bg-[#ffffff] selection:text-[#050505] border-x border-white/20 max-w-[1600px] mx-auto min-h-screen flex flex-col relative"
+  >
     <slot />
     <script>
-      import Lenis from 'lenis';
+      import Lenis from "lenis";
 
       const lenis = new Lenis({
         autoRaf: true,

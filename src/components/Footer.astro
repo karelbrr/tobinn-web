@@ -7,7 +7,7 @@
 >
   <!-- Main Footer Content -->
   <div
-    class="w-full max-w-7xl mx-auto px-6 sm:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
+    class="w-full max-w-7xl mx-auto px-6 sm:px-12 py-12 lg:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
   >
     <!-- Abstract / Brutalist Info -->
     <div class="flex flex-col gap-4">
@@ -27,28 +27,42 @@
       </div>
     </div>
 
-    <!-- Massive Year/Logo -->
-    <div class="flex flex-col items-start md:items-end w-full">
+    <!-- Right Side: Year & Technical Links -->
+    <div
+      class="flex flex-col items-start md:items-end w-full h-full justify-between gap-12 md:gap-0"
+    >
+      <!-- Massive Year -->
       <h2
-        class="font-sans font-extrabold text-[25vw] md:text-[15vw] leading-[0.75] tracking-tighter m-0 p-0 text-black mix-blend-difference"
+        class="font-sans font-extrabold text-[25vw] md:text-[12vw] leading-[0.75] tracking-tighter m-0 p-0 text-black mix-blend-difference"
       >
         '26
       </h2>
+
+      <!-- Legal & Credits Grid -->
       <div
-        class="flex flex-col sm:flex-row items-start sm:items-end justify-between w-full mt-4 gap-4"
+        class="flex flex-col lg:flex-row items-start lg:items-end justify-between w-full"
       >
-        <p class="font-mono text-xs font-bold uppercase tracking-widest">
-          &copy; {new Date().getFullYear()} DJTOBINN.<br />ALL RIGHTS RESERVED.
-        </p>
         <div
-          class="flex flex-col sm:flex-row gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black sm:text-right"
+          class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest flex flex-col gap-1"
         >
-          <a href="/privacy" class="hover:text-black transition-colors"
+          <span>&copy; {new Date().getFullYear()} DJTOBINN.</span>
+          <span>ALL RIGHTS RESERVED.</span>
+        </div>
+
+        <div
+          class="flex flex-col items-start lg:items-end gap-1 mt-6 lg:mt-0 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black"
+        >
+          <a href="/privacy" class="hover:text-black transition-all"
             >PRIVACY_POLICY</a
           >
-
-          <a href="/terms" class="hover:text-black transition-colors"
+          <a href="/terms" class="hover:text-black transition-all"
             >TERMS_&_CONDITIONS</a
+          >
+          <a
+            href="https://karelbraborec.com"
+            target="_blank"
+            class="hover:text-black transition-all text-black"
+            >KARELBRABOREC.COM</a
           >
         </div>
       </div>

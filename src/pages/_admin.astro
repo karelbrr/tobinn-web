@@ -1,0 +1,222 @@
+---
+import "@fontsource/geist-sans";
+import "../styles/global.css";
+import initialTour from "../data/tour.json";
+import initialAudio from "../data/audio.json";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SYS.ADMIN // TOBINN</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --bg: #050505;
+        --fg: #ffffff;
+      }
+      body {
+        background-color: var(--bg);
+        color: var(--fg);
+        font-family: "Geist Sans", sans-serif;
+      }
+      .display-text {
+        font-family: "Archivo Black", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-white selection:text-black min-h-screen p-4 sm:p-12 flex flex-col items-center justify-center">
+    
+    <main class="w-full max-w-3xl border border-white/20 p-6 sm:p-12 relative bg-black shadow-2xl">
+      
+      <!-- Decorative System Elements -->
+      <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-white"></div>
+      <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-white"></div>
+      <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white"></div>
+      <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white"></div>
+
+      <!-- Header -->
+      <div class="border-b border-white/20 pb-6 mb-10 flex justify-between items-end">
+        <div>
+          <h1 class="display-text text-4xl sm:text-5xl tracking-tighter uppercase mb-2">SYS.ADMIN</h1>
+          <p class="font-mono text-[10px] tracking-widest text-white/50 uppercase">Content Management System</p>
+        </div>
+        <div class="hidden sm:block">
+          <span class="inline-block bg-white text-black px-2 py-1 font-mono text-[10px] font-bold tracking-widest animate-pulse">AUTHORIZED</span>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form class="flex flex-col gap-12 font-mono" onsubmit="event.preventDefault()">
+        
+        <!-- DYNAMIC APP CONTAINER -->
+        <div id="app" class="flex flex-col gap-12"></div>
+
+        <!-- Submit Button -->
+        <div class="mt-8 pt-8 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center gap-4 sticky bottom-0 bg-black py-4 z-10 border-b">
+          <p id="save-status" class="text-[10px] text-white/40 tracking-widest">READY TO SAVE.</p>
+          <button type="button" id="save-btn" class="w-full sm:w-auto border border-white bg-white text-black px-8 py-4 font-bold text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer">
+            SAVE_ALL_CHANGES
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script is:inline define:vars={{ initialTour, initialAudio }}>
+      let tour = [...initialTour];
+      let audio = [...initialAudio];
+      
+      const app = document.getElementById('app');
+
+      function render() {
+        app.innerHTML = `
+          <!-- SECTION: TOUR DATES -->
+          <div class="flex flex-col gap-6">
+            <div class="border-b border-white/20 pb-2 mb-2 flex justify-between items-end">
+              <h2 class="text-sm font-bold tracking-widest text-white">1. TOUR DATES</h2>
+              <span class="text-[10px] text-white/50">${tour.length} UPCOMING GIGS</span>
+            </div>
+            
+            ${tour.map((item, index) => `
+              <div class="flex flex-col sm:flex-row gap-4 mb-4 border border-white/5 p-2 rounded">
+                <div class="flex flex-col gap-2 w-full sm:w-1/3">
+                  <label class="text-[10px] tracking-widest uppercase text-white/70">Date</label>
+                  <input type="text" class="tour-input bg-transparent border border-white/20 p-4 text-xs text-white focus:outline-none focus:border-white" data-index="${index}" data-field="date" value="${item.date}" />
+                </div>
+                <div class="flex flex-col gap-2 w-full sm:w-1/3">
+                  <label class="text-[10px] tracking-widest uppercase text-white/70">City</label>
+                  <input type="text" class="tour-input bg-transparent border border-white/20 p-4 text-xs text-white focus:outline-none focus:border-white" data-index="${index}" data-field="city" value="${item.city}" />
+                </div>
+                <div class="flex flex-col gap-2 w-full sm:w-1/3">
+                  <label class="text-[10px] tracking-widest uppercase text-white/70">Venue</label>
+                  <div class="flex gap-2 h-full">
+                    <input type="text" class="tour-input bg-transparent border border-white/20 p-4 text-xs text-white focus:outline-none focus:border-white w-full" data-index="${index}" data-field="venue" value="${item.venue}" />
+                    <button type="button" class="remove-tour border border-white/20 px-4 text-white/50 hover:text-red-500 hover:border-red-500 transition-colors cursor-pointer" data-index="${index}">X</button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+
+            <button type="button" id="add-tour" class="border border-dashed border-white/20 text-white/50 hover:text-white hover:border-white py-4 text-xs font-bold tracking-widest transition-colors w-full cursor-pointer">
+              + ADD NEW TOUR DATE
+            </button>
+          </div>
+
+          <!-- SECTION: AUDIO ARCHIVE -->
+          <div class="flex flex-col gap-6 mt-8">
+            <div class="border-b border-white/20 pb-2 mb-2 flex justify-between items-end">
+              <h2 class="text-sm font-bold tracking-widest text-white">2. AUDIO ARCHIVE</h2>
+              <span class="text-[10px] text-white/50">${audio.length} MIXES</span>
+            </div>
+
+            ${audio.map((mix, index) => `
+              <div class="border border-white/20 p-6 flex flex-col gap-4 mb-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-lg font-bold">MIX ${mix.id}</span>
+                  <button type="button" class="remove-audio text-xs text-white/50 hover:text-red-500 transition-colors cursor-pointer" data-index="${index}">REMOVE</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="flex flex-col gap-2">
+                    <label class="text-[10px] tracking-widest uppercase text-white/70">Title</label>
+                    <input type="text" class="audio-input bg-transparent border border-white/20 p-3 text-xs text-white focus:outline-none focus:border-white" data-index="${index}" data-field="title" value="${mix.title}" />
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <label class="text-[10px] tracking-widest uppercase text-white/70">Type</label>
+                    <input type="text" class="audio-input bg-transparent border border-white/20 p-3 text-xs text-white focus:outline-none focus:border-white" data-index="${index}" data-field="type" value="${mix.type}" />
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="text-[10px] tracking-widest uppercase text-white/70">Description</label>
+                  <input type="text" class="audio-input bg-transparent border border-white/20 p-3 text-xs text-white focus:outline-none focus:border-white text-white/50" data-index="${index}" data-field="description" value="${mix.description}" />
+                </div>
+              </div>
+            `).join('')}
+
+            <button type="button" id="add-audio" class="border border-dashed border-white/20 text-white/50 hover:text-white hover:border-white py-4 text-xs font-bold tracking-widest transition-colors w-full cursor-pointer">
+              + ADD NEW MIX
+            </button>
+          </div>
+        `;
+
+        attachListeners();
+      }
+
+      function attachListeners() {
+        document.querySelectorAll('.tour-input').forEach(el => {
+          el.addEventListener('input', (e) => {
+            tour[e.target.dataset.index][e.target.dataset.field] = e.target.value;
+          });
+        });
+        
+        document.querySelectorAll('.audio-input').forEach(el => {
+          el.addEventListener('input', (e) => {
+            audio[e.target.dataset.index][e.target.dataset.field] = e.target.value;
+          });
+        });
+
+        document.getElementById('add-tour').addEventListener('click', () => {
+          tour.push({ date: "", city: "", venue: "" });
+          render();
+        });
+
+        document.getElementById('add-audio').addEventListener('click', () => {
+          audio.push({ id: String(audio.length + 1).padStart(2, '0'), type: "", title: "", description: "" });
+          render();
+        });
+
+        document.querySelectorAll('.remove-tour').forEach(el => {
+          el.addEventListener('click', (e) => {
+            tour.splice(e.target.dataset.index, 1);
+            render();
+          });
+        });
+
+        document.querySelectorAll('.remove-audio').forEach(el => {
+          el.addEventListener('click', (e) => {
+            audio.splice(e.target.dataset.index, 1);
+            render();
+          });
+        });
+      }
+
+      document.getElementById('save-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('save-btn');
+        const status = document.getElementById('save-status');
+        btn.innerText = "SAVING...";
+        
+        try {
+          const res = await fetch('/api/save-content', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tour, audio })
+          });
+          
+          if (res.ok) {
+            btn.innerText = "SAVED!";
+            status.innerText = "FILES WRITTEN TO DISK.";
+            status.classList.remove('text-white/40');
+            status.classList.add('text-green-500');
+            setTimeout(() => {
+              btn.innerText = "SAVE_ALL_CHANGES";
+              status.innerText = "READY TO SAVE.";
+              status.classList.add('text-white/40');
+              status.classList.remove('text-green-500');
+            }, 3000);
+          } else {
+            throw new Error("API Error");
+          }
+        } catch(e) {
+          btn.innerText = "ERROR";
+          status.innerText = "SAVE FAILED. MUST BE IN LOCAL DEV MODE.";
+          status.classList.remove('text-white/40');
+          status.classList.add('text-red-500');
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>

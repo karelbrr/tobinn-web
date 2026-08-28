@@ -1,12 +1,12 @@
 ---
-
+import mixes from '../data/audio.json';
 ---
 
 <section
   id="audio"
-  class="py-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
+  class="py-12 lg:py-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
 >
-  <div class="flex flex-col w-full border-b border-white/20 pb-16">
+  <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
     <h2
       class="display-text text-[15vw] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
     >
@@ -19,55 +19,29 @@
     </h2>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 px-6 sm:px-12">
-    <!-- Mix 1 -->
-    <div
-      class="border border-white/20 p-8 group hover:border-[#ffffff] transition-colors"
-    >
-      <div class="flex justify-between items-start mb-12">
-        <span class="display-text text-5xl text-white">01</span>
-        <span
-          class="text-[10px] uppercase tracking-widest font-mono bg-white text-black font-bold px-2 py-1"
-          >LIVE SET</span
-        >
-      </div>
-      <h3
-        class="display-text text-3xl mb-4 group-hover:text-[#ffffff] transition-colors"
-      >
-        FOLD, LONDON
-      </h3>
-      <p class="text-xs font-mono uppercase tracking-widest mb-8">
-        2H INDUSTRIAL TECHNO MIX
-      </p>
-      <button
-        class="w-full py-4 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#ffffff] transition-colors"
-        >LISTEN</button
-      >
-    </div>
-
-    <!-- Mix 2 -->
-    <div
-      class="border border-white/20 p-8 group hover:border-[#ffffff] transition-colors"
-    >
-      <div class="flex justify-between items-start mb-12">
-        <span class="display-text text-5xl text-white">02</span>
-        <span
-          class="text-[10px] uppercase tracking-widest font-mono bg-white text-black font-bold px-2 py-1"
-          >PODCAST</span
-        >
-      </div>
-      <h3
-        class="display-text text-3xl mb-4 group-hover:text-[#ffffff] transition-colors"
-      >
-        HATE PODCAST 355
-      </h3>
-      <p class="text-xs font-mono uppercase tracking-widest mb-8">
-        STUDIO MIX 145 BPM
-      </p>
-      <button
-        class="w-full py-4 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#ffffff] transition-colors"
-        >LISTEN</button
-      >
-    </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 lg:pt-16 px-6 sm:px-12"
+  >
+    {
+      mixes.map((mix) => (
+        <div class="border border-white/20 p-8 group hover:border-[#ffffff] transition-colors">
+          <div class="flex justify-between items-start mb-12">
+            <span class="display-text text-5xl text-white">{mix.id}</span>
+            <span class="text-[10px] uppercase tracking-widest font-mono bg-white text-black font-bold px-2 py-1">
+              {mix.type}
+            </span>
+          </div>
+          <h3 class="display-text text-3xl mb-4 group-hover:text-[#ffffff] transition-colors">
+            {mix.title}
+          </h3>
+          <p class="text-xs font-mono uppercase tracking-widest mb-8">
+            {mix.description}
+          </p>
+          <button class="w-full py-4 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#ffffff] transition-colors">
+            LISTEN
+          </button>
+        </div>
+      ))
+    }
   </div>
 </section>
