@@ -28,22 +28,21 @@ const videos = [
     <div class="grid grid-cols-1 sm:grid-cols-3 w-full">
       {
         videos.map((video) => (
-          <div class="relative w-full aspect-[3/4] overflow-hidden group transition-colors">
+          <div class="relative w-full aspect-3/4 overflow-hidden group transition-colors">
             <video
               src={video.src}
-              class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+              class="custom-video w-full h-full object-cover grayscale opacity-80 md:hover:grayscale-0 md:hover:opacity-100 transition-all duration-500 cursor-pointer"
               muted
               loop
               playsinline
+              preload="metadata"
               aria-hidden="true"
-              onmouseover="this.play()"
-              onmouseout="this.pause(); this.currentTime = 0;"
             >
               <track kind="captions" src="" label="English" srclang="en" />
             </video>
 
             {/* Optional overlay text if needed */}
-            <div class="absolute bottom-4 left-4 z-20 pointer-events-none mix-blend-difference text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div class="absolute bottom-4 left-4 z-20 pointer-events-none mix-blend-difference text-white opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 mobile-title">
               <span class="font-mono text-xs uppercase tracking-widest font-bold">
                 {video.title}
               </span>
@@ -54,3 +53,65 @@ const videos = [
     </div>
   </div>
 </section>
+
+<script>
+  // Wait for the DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    const videos = document.querySelectorAll(".custom-video") as NodeListOf<HTMLVideoElement>;
+    
+    // Check if device is mobile (Tailwind 'sm' breakpoint is 640px, 'md' is 768px)
+    // We use 768px as the desktop threshold
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+    // Set up Intersection Observer for Lazy Loading Playback
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const video = entry.target as HTMLVideoElement;
+
+          if (isMobile) {
+            // Mobile: Autoplay when in view and remove grayscale
+            video.play().catch(e => console.log("Autoplay prevented:", e));
+            video.classList.remove("grayscale", "opacity-80");
+            
+            // Also show the title on mobile since there is no hover
+            const titleContainer = video.parentElement?.querySelector('.mobile-title');
+            if (titleContainer) {
+              titleContainer.classList.remove("opacity-0");
+              titleContainer.classList.add("opacity-100");
+            }
+          }
+          
+          // Stop observing once loaded
+          observer.unobserve(video);
+        }
+      });
+    }, {
+      rootMargin: "200px 0px", // Pre-load slightly before scrolling into view
+    });
+
+    videos.forEach((video) => {
+      videoObserver.observe(video);
+
+      if (!isMobile) {
+        // Desktop: Play on Click and Hover
+        video.addEventListener("click", () => {
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+        });
+
+        video.addEventListener("mouseenter", () => {
+          video.play().catch(() => {});
+        });
+
+        video.addEventListener("mouseleave", () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      }
+    });
+  });
+</script>
