@@ -1,0 +1,56 @@
+---
+// src/components/Videos.astro
+const videos = [
+  { id: 1, src: "/videos/dj1.mp4", title: "MUSIC CLUB SUD" },
+  { id: 2, src: "/videos/dj2.mp4", title: "MUSIC CLUB SUD" },
+  { id: 3, src: "/videos/dj3.mp4", title: "STUDIO SESSION" },
+];
+---
+
+<section
+  id="videos"
+  class="pt-12 lg:pt-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
+>
+  <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
+    <h2
+      class="display-text text-[15vw] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
+    >
+      VIDEO
+    </h2>
+    <h2
+      class="display-text text-[15vw] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
+    >
+      ARCHIVE
+    </h2>
+  </div>
+
+  <div class="">
+    <div class="grid grid-cols-1 sm:grid-cols-3 w-full">
+      {
+        videos.map((video) => (
+          <div class="relative w-full aspect-[3/4] overflow-hidden group transition-colors">
+            <video
+              src={video.src}
+              class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+              muted
+              loop
+              playsinline
+              aria-hidden="true"
+              onmouseover="this.play()"
+              onmouseout="this.pause(); this.currentTime = 0;"
+            >
+              <track kind="captions" src="" label="English" srclang="en" />
+            </video>
+
+            {/* Optional overlay text if needed */}
+            <div class="absolute bottom-4 left-4 z-20 pointer-events-none mix-blend-difference text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <span class="font-mono text-xs uppercase tracking-widest font-bold">
+                {video.title}
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

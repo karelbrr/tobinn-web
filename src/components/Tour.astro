@@ -43,7 +43,7 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
 
         return (
           <div
-            class={`flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 border-b border-white/20 px-4 -mx-4 transition-all duration-300 ${isPast ? "opacity-40 cursor-default grayscale" : "group hover:bg-[#ffffff]"}`}
+            class={`flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 border-b border-white/20 px-4 -mx-4 transition-all duration-300 ${isPast ? "opacity-70 cursor-default grayscale" : "group hover:bg-[#ffffff]"}`}
           >
             <div class="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-8 lg:gap-16 w-full sm:w-auto">
               <span
@@ -62,7 +62,7 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
                 class={`text-xs sm:text-sm uppercase tracking-widest font-mono transition-colors truncate ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
               >
                 {item.venue}{" "}
-                {isPast && <span class="opacity-75 ml-1">(PAST)</span>}
+                {isPast && <span class="ml-1">(PAST)</span>}
               </span>
             </div>
           </div>
