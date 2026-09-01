@@ -1,5 +1,14 @@
 ---
 import dates from '../data/tour.json';
+
+const parseDate = (dateString: string) => {
+  const [day, month, year] = dateString.split('.');
+  // Assumes 20YY format
+  return new Date(`20${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
+};
+
+const now = new Date();
+now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
 ---
 
 <section
@@ -21,23 +30,27 @@ import dates from '../data/tour.json';
 
   <div class="flex flex-col pt-8 lg:pt-16 px-6 sm:px-12">
     {
-      dates.map((item) => (
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 border-b border-white/20 group hover:bg-[#ffffff] transition-colors cursor-crosshair px-4 -mx-4">
-          <div class="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-8 lg:gap-16 w-full sm:w-auto">
-            <span class="text-xs sm:text-sm uppercase tracking-wider group-hover:text-black font-mono transition-colors">
-              {item.date}
-            </span>
-            <span class="display-text text-3xl md:text-4xl lg:text-5xl group-hover:text-black transition-colors">
-              {item.city}
-            </span>
+      dates.map((item) => {
+        const isPast = parseDate(item.date) < now;
+
+        return (
+          <div class={`flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 border-b border-white/20 px-4 -mx-4 transition-all duration-300 ${isPast ? 'opacity-40 cursor-default grayscale' : 'group hover:bg-[#ffffff]'}`}>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-8 lg:gap-16 w-full sm:w-auto">
+              <span class={`text-xs sm:text-sm uppercase tracking-wider font-mono transition-colors ${isPast ? 'text-white' : 'text-white group-hover:text-black'}`}>
+                {item.date}
+              </span>
+              <span class={`display-text text-3xl md:text-4xl lg:text-5xl transition-colors ${isPast ? 'line-through decoration-white/60 text-white' : 'text-white group-hover:text-black'}`}>
+                {item.city}
+              </span>
+            </div>
+            <div class="mt-4 sm:mt-0 flex justify-between w-full sm:w-auto items-center sm:gap-6 md:gap-16">
+              <span class={`text-xs sm:text-sm uppercase tracking-widest font-mono transition-colors truncate ${isPast ? 'text-white' : 'text-white group-hover:text-black'}`}>
+                {item.venue} {isPast && <span class="opacity-75 ml-1">(PAST)</span>}
+              </span>
+            </div>
           </div>
-          <div class="mt-4 sm:mt-0 flex justify-between w-full sm:w-auto items-center sm:gap-6 md:gap-16">
-            <span class="text-xs sm:text-sm uppercase tracking-widest text-white group-hover:text-black font-mono transition-colors truncate">
-              {item.venue}
-            </span>
-          </div>
-        </div>
-      ))
+        );
+      })
     }
   </div>
 </section>
