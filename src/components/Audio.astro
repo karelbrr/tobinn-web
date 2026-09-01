@@ -1,5 +1,9 @@
 ---
-import mixes from '../data/audio.json';
+import { getCollection } from 'astro:content';
+
+const audio = await getCollection('audio');
+// Sort by ID to keep the numeric order
+const mixes = audio.map(a => a.data).sort((a, b) => parseInt(a.id) - parseInt(b.id));
 ---
 
 <section

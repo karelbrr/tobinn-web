@@ -8,9 +8,28 @@
   >
     <!-- Mobile Menu Toggle Button -->
     <div class="md:hidden flex justify-end w-full pt-8 font-mono text-white">
-      <button id="mobile-menu-btn" aria-label="Open menu" class="uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2">
+      <button
+        id="mobile-menu-btn"
+        aria-label="Open menu"
+        class="uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2"
+      >
         <span>Menu</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><line x1="4" x2="20" y1="12" y2="12"></line><line
+            x1="4"
+            x2="20"
+            y1="6"
+            y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg
+        >
       </button>
     </div>
 
@@ -37,51 +56,79 @@
   </div>
 
   <!-- Mobile Menu Overlay -->
-  <div id="mobile-menu" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
-    <button id="close-menu-btn" aria-label="Close menu" class="absolute top-6 right-6 text-white p-4 hover:text-gray-400 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 bg-[#050505]/95 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+  >
+    <button
+      id="close-menu-btn"
+      aria-label="Close menu"
+      class="absolute top-6 right-6 text-white p-4 hover:text-gray-400 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
+      >
     </button>
-    <nav class="flex flex-col items-center gap-10 text-2xl sm:text-3xl uppercase font-bold tracking-widest font-mono text-white">
-      <a href="#about" class="mobile-link hover:text-gray-400 transition-colors">About</a>
-      <a href="#tour" class="mobile-link hover:text-gray-400 transition-colors">Tour</a>
-      <a href="#audio" class="mobile-link hover:text-gray-400 transition-colors">Audio</a>
-      <a href="#book" class="mobile-link hover:text-gray-400 transition-colors">Book</a>
+    <nav
+      class="flex flex-col items-center gap-10 text-2xl sm:text-3xl uppercase font-bold tracking-widest font-mono text-white"
+    >
+      <a href="#about" class="mobile-link hover:text-gray-400 transition-colors"
+        >About</a
+      >
+      <a href="#tour" class="mobile-link hover:text-gray-400 transition-colors"
+        >Tour</a
+      >
+      <a href="#audio" class="mobile-link hover:text-gray-400 transition-colors"
+        >Audio</a
+      >
+      <a href="#book" class="mobile-link hover:text-gray-400 transition-colors"
+        >Book</a
+      >
     </nav>
   </div>
 </header>
 
 <script>
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const closeMenuBtn = document.getElementById('close-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const closeMenuBtn = document.getElementById("close-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
 
   function openMenu() {
     if (!mobileMenu) return;
-    mobileMenu.classList.remove('hidden');
-    mobileMenu.classList.add('flex');
+    mobileMenu.classList.remove("hidden");
+    mobileMenu.classList.add("flex");
     // Small delay to allow display block to apply before changing opacity
     setTimeout(() => {
-      mobileMenu.classList.remove('opacity-0');
-      mobileMenu.classList.add('opacity-100');
+      mobileMenu.classList.remove("opacity-0");
+      mobileMenu.classList.add("opacity-100");
     }, 10);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   }
 
   function closeMenu() {
     if (!mobileMenu) return;
-    mobileMenu.classList.remove('opacity-100');
-    mobileMenu.classList.add('opacity-0');
+    mobileMenu.classList.remove("opacity-100");
+    mobileMenu.classList.add("opacity-0");
     setTimeout(() => {
-      mobileMenu.classList.remove('flex');
-      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove("flex");
+      mobileMenu.classList.add("hidden");
     }, 300);
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   }
 
-  mobileMenuBtn?.addEventListener('click', openMenu);
-  closeMenuBtn?.addEventListener('click', closeMenu);
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', closeMenu);
+  mobileMenuBtn?.addEventListener("click", openMenu);
+  closeMenuBtn?.addEventListener("click", closeMenu);
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
   });
 </script>
