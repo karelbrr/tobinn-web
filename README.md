@@ -1,31 +1,21 @@
-# Astro Starter Kit: Minimal
+# DJ TOBINN - Official Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This is the official website for DJ TOBINN, built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Project Structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+The project follows a standard Astro directory structure:
 
 ```text
 /
-├── public/
+├── public/           # Static assets like images and videos
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/   # Reusable UI components (Hero, About, Tour, Videos, Footer, etc.)
+│   └── pages/        # Astro pages (index, privacy, etc.)
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
+## Commands
 
 All commands are run from the root of the project, from a terminal:
 
@@ -35,9 +25,12 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🛠 Technologies Used
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Framework**: [Astro](https://astro.build)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+
+## License
+
+All rights reserved to DJ TOBINN.
