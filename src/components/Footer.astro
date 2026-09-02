@@ -3,14 +3,14 @@
 ---
 
 <footer
-  class="w-full bg-white text-black border-t-4 border-black overflow-hidden relative selection:bg-black selection:text-[#C0C0C0]"
+  class="w-full bg-white text-black pt-24 md:pt-[200px] border-t-4 border-black overflow-hidden relative selection:bg-black selection:text-[#C0C0C0]"
 >
   <!-- Main Footer Content -->
   <div
     class="w-full px-6 sm:px-12 pb-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
   >
     <!-- Abstract / Brutalist Info -->
-    <div class="flex flex-col gap-4 pt-5 lg:pt-0">
+    <div class="flex flex-col gap-4 pt-5 md:pt-0">
       <div class="flex flex-col gap-2">
         <a
           href="mailto:booking@tobinn.xyz"
@@ -19,7 +19,8 @@
           BOOKING
         </a>
         <a
-          href="https://instagram.com"
+          target="_blank"
+          href="https://www.instagram.com/djtobinn"
           class="font-sans font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter"
         >
           INSTAGRAM
@@ -31,25 +32,9 @@
     <div
       class="flex flex-col items-start md:items-end w-full h-full justify-between gap-12 md:gap-0"
     >
-      <!-- Massive Year -->
-      <h2
-        class="font-sans font-extrabold text-[25vw] md:text-[12vw] leading-[0.75] tracking-tighter m-0 p-0 text-black mix-blend-difference"
-      >
-        '26
-      </h2>
-
-      <div
-        class="flex flex-col items-start lg:items-end w-full gap-6 lg:gap-4 mt-8"
-      >
+      <div class="flex flex-col items-start md:items-end w-full gap-6 md:gap-4">
         <div
-          class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest flex flex-col items-start lg:items-end text-left lg:text-right gap-1"
-        >
-          <span>&copy; {new Date().getFullYear()} DJTOBINN.</span>
-          <span>ALL RIGHTS RESERVED.</span>
-        </div>
-
-        <div
-          class="flex flex-col items-start lg:items-end gap-2 sm:gap-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black text-left lg:text-right"
+          class="flex flex-col items-start md:items-end gap-2 sm:gap-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black text-left md:text-right"
         >
           <a
             href="/privacy"
@@ -67,6 +52,13 @@
             class="py-2 sm:py-1 hover:text-gray-600 transition-all text-black block"
             >KARELBRABOREC.COM</a
           >
+        </div>
+
+        <div
+          class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest flex flex-col items-start md:items-end text-left md:text-right gap-1"
+        >
+          <span>&copy; {new Date().getFullYear()} DJTOBINN.</span>
+          <span>ALL RIGHTS RESERVED.</span>
         </div>
       </div>
     </div>

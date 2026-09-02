@@ -61,8 +61,7 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
               <span
                 class={`text-xs sm:text-sm uppercase tracking-widest font-mono transition-colors truncate ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
               >
-                {item.venue}{" "}
-                {isPast && <span class="ml-1">(PAST)</span>}
+                {item.venue} {isPast && <span class="ml-1">(PAST)</span>}
               </span>
             </div>
           </div>
