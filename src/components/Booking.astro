@@ -12,12 +12,178 @@
     BOOKING
   </h2>
 
-  <div class="w-full sm:w-auto px-6 sm:px-0">
-    <a
-      href="mailto:tobiashlobil9@gmail.com"
-      class="border-2 border-white bg-white text-black px-6 sm:px-8 py-4 font-sans font-bold text-xs sm:text-base uppercase tracking-widest hover:bg-transparent hover:text-white transition-all w-full text-center block"
+  <div
+    class="w-full sm:w-auto px-6 sm:px-0 relative flex flex-col items-center justify-center"
+  >
+    <button
+      type="button"
+      id="initiate-contact-btn"
+      class="border-2 border-white bg-white text-black px-6 sm:px-8 py-4 font-sans font-bold text-xs sm:text-base uppercase tracking-widest hover:bg-transparent hover:text-white transition-all w-full sm:w-auto min-w-62.5 text-center block cursor-pointer mb-6"
     >
-      INITIATE CONTACT
-    </a>
+      CONTACT
+    </button>
+
+    <form
+      id="contact-form"
+      class="hidden flex-col gap-5 text-left w-full sm:w-112.5 mx-auto mb-6"
+    >
+      <p
+        class="font-sans font-bold text-lg uppercase tracking-widest text-center"
+      >
+        OR CONTACT ON <a href="mailto:booking@tobinn.cz">BOOKING@TOBINN.CZ</a>
+      </p>
+      <input
+        type="hidden"
+        name="access_key"
+        value="8cdbedee-7739-415f-ae27-9c570eef0394"
+      />
+      <div class="flex flex-col gap-2">
+        <label
+          for="name"
+          class="font-sans font-bold text-xs uppercase tracking-widest text-white"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="border border-white bg-transparent text-white px-4 py-3 font-sans text-sm focus:outline-none transition-colors rounded-none"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="email"
+          class="font-sans font-bold text-xs uppercase tracking-widest text-white"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="border border-white bg-transparent text-white px-4 py-3 font-sans text-sm focus:outline-none transition-colors rounded-none"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="date"
+          class="font-sans font-bold text-xs uppercase tracking-widest text-white"
+          >Event Date (Optional)</label
+        >
+        <input
+          type="date"
+          id="date"
+          name="date"
+          class="border border-white bg-transparent text-white px-4 py-3 font-sans text-sm focus:outline-none transition-colors rounded-none"
+          style="color-scheme: dark;"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="message"
+          class="font-sans font-bold text-xs uppercase tracking-widest text-white"
+          >Message</label
+        >
+        <textarea
+          id="message"
+          name="message"
+          rows="4"
+          required
+          class="border border-white bg-transparent text-white px-4 py-3 font-sans text-sm focus:outline-none transition-colors resize-none rounded-none"
+        ></textarea>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-2">
+        <button
+          type="submit"
+          class="border-2 border-white bg-white text-black px-6 sm:px-8 py-4 font-sans font-bold text-xs sm:text-base uppercase tracking-widest hover:bg-transparent hover:text-white transition-all w-full text-center block cursor-pointer"
+        >
+          SUBMIT
+        </button>
+        <button
+          type="button"
+          id="cancel-contact-btn"
+          class="py-3 text-white hover:text-white text-xs font-mono uppercase tracking-widest transition-colors w-full text-center cursor-pointer"
+        >
+          CANCEL
+        </button>
+      </div>
+    </form>
   </div>
 </section>
+
+<script>
+  function setupBookingForm() {
+    const initiateBtn = document.getElementById("initiate-contact-btn");
+    const contactForm = document.getElementById(
+      "contact-form",
+    ) as HTMLFormElement | null;
+    const cancelBtn = document.getElementById("cancel-contact-btn");
+
+    if (initiateBtn && contactForm && cancelBtn) {
+      // Show form on initiate click
+      initiateBtn.addEventListener("click", () => {
+        initiateBtn.style.display = "none";
+        contactForm.classList.remove("hidden");
+        contactForm.classList.add("flex");
+
+        // Focus the name input
+        const nameInput = document.getElementById("name");
+        if (nameInput) nameInput.focus();
+      });
+
+      // Hide form on cancel click
+      cancelBtn.addEventListener("click", () => {
+        contactForm.classList.remove("flex");
+        contactForm.classList.add("hidden");
+        initiateBtn.style.display = "block";
+      });
+
+      // Handle form submission via Web3Forms
+      contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const submitBtn = contactForm.querySelector(
+          'button[type="submit"]',
+        ) as HTMLButtonElement;
+        if (!submitBtn) return;
+
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "SENDING...";
+
+        const formData = new FormData(contactForm);
+
+        try {
+          const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            submitBtn.innerText = "SENT SUCCESSFULLY!";
+            contactForm.reset();
+            setTimeout(() => {
+              submitBtn.innerText = originalText;
+              cancelBtn.click(); // Hide form after success
+            }, 3000);
+          } else {
+            submitBtn.innerText = "ERROR. TRY AGAIN.";
+            setTimeout(() => (submitBtn.innerText = originalText), 3000);
+          }
+        } catch (error) {
+          submitBtn.innerText = "ERROR. TRY AGAIN.";
+          setTimeout(() => (submitBtn.innerText = originalText), 3000);
+        }
+      });
+    }
+  }
+
+  // Run on initial load
+  setupBookingForm();
+
+  // Astro view transitions support
+  document.addEventListener("astro:page-load", setupBookingForm);
+</script>
