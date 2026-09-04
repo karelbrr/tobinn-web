@@ -37,6 +37,12 @@
         name="access_key"
         value="8cdbedee-7739-415f-ae27-9c570eef0394"
       />
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="hidden"
+        style="display: none;"
+      />
       <div class="flex flex-col gap-2">
         <label
           for="name"
@@ -153,6 +159,8 @@
 
         const originalText = submitBtn.innerText;
         submitBtn.innerText = "SENDING...";
+        submitBtn.disabled = true;
+        submitBtn.classList.add("opacity-50", "cursor-not-allowed");
 
         const formData = new FormData(contactForm);
 
@@ -167,15 +175,25 @@
             contactForm.reset();
             setTimeout(() => {
               submitBtn.innerText = originalText;
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
               cancelBtn.click(); // Hide form after success
             }, 3000);
           } else {
             submitBtn.innerText = "ERROR. TRY AGAIN.";
-            setTimeout(() => (submitBtn.innerText = originalText), 3000);
+            setTimeout(() => {
+              submitBtn.innerText = originalText;
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            }, 3000);
           }
         } catch (error) {
           submitBtn.innerText = "ERROR. TRY AGAIN.";
-          setTimeout(() => (submitBtn.innerText = originalText), 3000);
+          setTimeout(() => {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          }, 3000);
         }
       });
     }

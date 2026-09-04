@@ -10,7 +10,7 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="bg-[#050505] overscroll-none">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -20,17 +20,23 @@ const { title } = Astro.props;
       name="description"
       content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music. Booking for clubs and events."
     />
-    
+
     <!-- Open Graph / Facebook / iMessage -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music." />
+    <meta
+      property="og:description"
+      content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music."
+    />
     <meta property="og:image" content="/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music." />
+    <meta
+      property="twitter:description"
+      content="Official portfolio and booking site for DJ Tobinn. 17-year-old DJ focused on House, EDM, and Dance music."
+    />
     <meta property="twitter:image" content="/og-image.png" />
 
     <title>{title}</title>
@@ -63,12 +69,12 @@ const { title } = Astro.props;
     class="antialiased selection:bg-[#ffffff] selection:text-[#050505] border-x border-white/20 max-w-[1600px] mx-auto min-h-screen flex flex-col relative"
   >
     <slot />
-    <script>
+    <!-- <script>
       import Lenis from "lenis";
 
       const lenis = new Lenis({
         autoRaf: true,
       });
-    </script>
+    </script> -->
   </body>
 </html>
