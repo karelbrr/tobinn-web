@@ -37,7 +37,7 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta
       name="description"
@@ -134,12 +134,5 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
     class="antialiased selection:bg-[#ffffff] selection:text-[#050505] border-x border-white/20 max-w-[1600px] mx-auto min-h-screen flex flex-col relative"
   >
     <slot />
-    <!-- <script>
-      import Lenis from "lenis";
-
-      const lenis = new Lenis({
-        autoRaf: true,
-      });
-    </script> -->
   </body>
 </html>

@@ -18,6 +18,7 @@ export default defineConfig({
     react(),
     markdoc(),
     sitemap({
+      filter: (page) => !/\/(privacy|terms)\/?$/.test(page),
       i18n: {
         defaultLocale: 'en',
         locales: {

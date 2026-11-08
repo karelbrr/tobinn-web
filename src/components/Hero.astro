@@ -17,7 +17,9 @@ const { nav } = ui[toLang(Astro.currentLocale)];
       <button
         id="mobile-menu-btn"
         aria-label={nav.openMenu}
-        class="md:hidden uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        class="md:hidden uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2 py-3 -my-3"
       >
         <span>{nav.menu}</span>
         <svg
@@ -110,6 +112,7 @@ const { nav } = ui[toLang(Astro.currentLocale)];
 
   function openMenu() {
     if (!mobileMenu) return;
+    mobileMenuBtn?.setAttribute("aria-expanded", "true");
     mobileMenu.classList.remove("hidden");
     mobileMenu.classList.add("flex");
     // Small delay to allow display block to apply before changing opacity
@@ -118,10 +121,12 @@ const { nav } = ui[toLang(Astro.currentLocale)];
       mobileMenu.classList.add("opacity-100");
     }, 10);
     document.body.style.overflow = "hidden";
+    closeMenuBtn?.focus();
   }
 
   function closeMenu() {
-    if (!mobileMenu) return;
+    if (!mobileMenu || mobileMenu.classList.contains("hidden")) return;
+    mobileMenuBtn?.setAttribute("aria-expanded", "false");
     mobileMenu.classList.remove("opacity-100");
     mobileMenu.classList.add("opacity-0");
     setTimeout(() => {
@@ -129,11 +134,15 @@ const { nav } = ui[toLang(Astro.currentLocale)];
       mobileMenu.classList.add("hidden");
     }, 300);
     document.body.style.overflow = "";
+    mobileMenuBtn?.focus();
   }
 
   mobileMenuBtn?.addEventListener("click", openMenu);
   closeMenuBtn?.addEventListener("click", closeMenu);
   mobileLinks.forEach((link) => {
     link.addEventListener("click", closeMenu);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
   });
 </script>

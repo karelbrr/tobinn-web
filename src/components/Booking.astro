@@ -35,7 +35,12 @@ const { booking: t } = ui[toLang(Astro.currentLocale)];
       <p
         class="font-sans font-bold text-lg uppercase tracking-widest text-center"
       >
-        {t.orContactOn} <a href="mailto:booking@tobinn.cz">BOOKING@TOBINN.CZ</a>
+        {t.orContactOn}{" "}
+        <a
+          href="mailto:booking@tobinn.cz"
+          class="underline decoration-white/40 underline-offset-4 hover:decoration-white transition-colors"
+          >BOOKING@TOBINN.CZ</a
+        >
       </p>
       <input
         type="hidden"
@@ -118,7 +123,7 @@ const { booking: t } = ui[toLang(Astro.currentLocale)];
         <button
           type="button"
           id="cancel-contact-btn"
-          class="py-3 text-white hover:text-white text-xs font-mono uppercase tracking-widest transition-colors w-full text-center cursor-pointer"
+          class="py-3 text-white/60 hover:text-white text-xs font-mono uppercase tracking-widest transition-colors w-full text-center cursor-pointer"
         >
           {t.cancel}
         </button>

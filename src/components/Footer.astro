@@ -18,13 +18,14 @@ const { footer: t } = ui[lang];
     <div class="flex flex-col gap-4 pt-5 md:pt-0">
       <div class="flex flex-col gap-2">
         <a
-          href="mailto:booking@tobinn.xyz"
+          href="mailto:booking@tobinn.cz"
           class="font-sans font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter"
         >
           BOOKING
         </a>
         <a
           target="_blank"
+          rel="noopener"
           href="https://www.instagram.com/djtobinn"
           class="font-sans font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter"
         >
@@ -39,22 +40,23 @@ const { footer: t } = ui[lang];
     >
       <div class="flex flex-col items-start md:items-end w-full gap-6 md:gap-4">
         <div
-          class="flex flex-col items-start md:items-end gap-2 sm:gap-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black text-left md:text-right"
+          class="flex flex-col items-start md:items-end gap-2 sm:gap-1 font-mono text-xs font-bold uppercase tracking-widest text-black text-left md:text-right"
         >
           <a
             href={getRelativeLocaleUrl(lang, "privacy")}
-            class="py-2 sm:py-1 hover:text-gray-600 transition-all block"
+            class="py-3 sm:py-1 hover:text-gray-600 transition-colors block"
             >{t.privacy}</a
           >
           <a
             href={getRelativeLocaleUrl(lang, "terms")}
-            class="py-2 sm:py-1 hover:text-gray-600 transition-all block"
+            class="py-3 sm:py-1 hover:text-gray-600 transition-colors block"
             >{t.terms}</a
           >
           <a
             href="https://karelbraborec.com"
             target="_blank"
-            class="py-2 sm:py-1 hover:text-gray-600 transition-all text-black block"
+            rel="noopener"
+            class="py-3 sm:py-1 hover:text-gray-600 transition-colors text-black block"
             >KARELBRABOREC.COM</a
           >
         </div>
@@ -66,7 +68,7 @@ const { footer: t } = ui[lang];
           <span>{t.rightsReserved}</span>
         </div>
 
-        <LanguageSwitch class="py-2 sm:py-1 text-[10px] sm:text-xs" />
+        <LanguageSwitch class="py-2 sm:py-1" />
       </div>
     </div>
   </div>

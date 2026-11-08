@@ -13,7 +13,7 @@ const mixes = audio
 
 <section
   id="audio"
-  class="py-12 lg:py-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
+  class="py-12 lg:py-24 border-t border-white/20 relative z-10 bg-[#050505] w-full overflow-hidden"
 >
   <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
     {
@@ -49,14 +49,14 @@ const mixes = audio
       ) : (
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {mixes.map((mix) => (
-            <div class="border border-white/20 p-8 group hover:border-[#ffffff] transition-colors">
+            <div class="border border-white/20 p-8 group hover:border-white transition-colors">
               <div class="flex justify-between items-start mb-12">
                 <span class="display-text text-5xl text-white">{mix.id}</span>
                 <span class="text-[10px] uppercase tracking-widest font-mono bg-white text-black font-bold px-2 py-1">
                   {mix.type}
                 </span>
               </div>
-              <h3 class="display-text text-3xl mb-4 group-hover:text-[#ffffff] transition-colors">
+              <h3 class="display-text text-3xl mb-4">
                 {mix.title}
               </h3>
               <p class="text-xs font-mono uppercase tracking-widest mb-8">

@@ -38,7 +38,7 @@ const options = Object.entries(languages) as [Lang, string][];
           lang={lang}
           aria-current={lang === currentLang ? "page" : undefined}
           class:list={[
-            "language-link transition-opacity",
+            "language-link py-2 transition-opacity",
             lang === currentLang ? "opacity-100" : "opacity-40 hover:opacity-100",
           ]}
         >

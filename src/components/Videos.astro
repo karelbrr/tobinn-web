@@ -12,7 +12,7 @@ const videos = [
 
 <section
   id="videos"
-  class="pt-12 lg:pt-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
+  class="pt-12 lg:pt-24 border-t border-white/20 relative z-10 bg-[#050505] w-full overflow-hidden"
 >
   <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
     {
@@ -24,8 +24,7 @@ const videos = [
     }
   </div>
 
-  <div class="">
-    <div class="grid grid-cols-1 sm:grid-cols-3 w-full">
+  <div class="grid grid-cols-1 sm:grid-cols-3 w-full">
       {
         videos.map((video) => (
           <div class="relative w-full aspect-3/4 overflow-hidden group transition-colors">
@@ -40,7 +39,6 @@ const videos = [
               aria-hidden="true"
             />
 
-            {/* Optional overlay text if needed */}
             <div class="absolute bottom-4 left-4 z-20 pointer-events-none mix-blend-difference text-white opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 mobile-title">
               <span class="font-mono text-xs uppercase tracking-widest font-bold">
                 {video.title}
@@ -49,7 +47,6 @@ const videos = [
           </div>
         ))
       }
-    </div>
   </div>
 </section>
 
@@ -63,6 +60,9 @@ const videos = [
     // Check if device is mobile (Tailwind 'sm' breakpoint is 640px, 'md' is 768px)
     // We use 768px as the desktop threshold
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     // Set up Intersection Observer for Lazy Loading Playback
     const videoObserver = new IntersectionObserver(
@@ -72,8 +72,8 @@ const videos = [
             const video = entry.target as HTMLVideoElement;
 
             if (isMobile) {
-              // Mobile: Autoplay when in view and remove grayscale
-              video.play().catch((e) => console.log("Autoplay prevented:", e));
+              // Mobile: autoplay when in view (unless the visitor prefers reduced motion) and remove grayscale
+              if (!reducedMotion) video.play().catch(() => {});
               video.classList.remove("grayscale", "opacity-80");
 
               // Also show the title on mobile since there is no hover
