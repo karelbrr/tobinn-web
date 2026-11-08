@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Services from "../components/Services.astro";
+import StructuredData from "../components/StructuredData.astro";
+import Tour from "../components/Tour.astro";
+import Audio from "../components/Audio.astro";
+import Videos from "../components/Videos.astro";
+import Booking from "../components/Booking.astro";
+import Footer from "../components/Footer.astro";
+import { toLang, ui } from "../i18n/ui";
+
+const { meta } = ui[toLang(Astro.currentLocale)];
+---
+
+<Layout title={meta.title}>
+  <StructuredData slot="head" />
+  <main class="grow flex flex-col relative z-10">
+    <Hero />
+    <About />
+    <Services />
+    <Tour />
+    <Audio />
+    <Videos />
+    <Booking />
+    <Footer />
+  </main>
+</Layout>

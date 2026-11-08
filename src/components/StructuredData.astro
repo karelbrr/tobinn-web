@@ -1,0 +1,81 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { toLang, ui } from "../i18n/ui";
+import { getTourDates, isPastTour } from "../lib/tours";
+
+const lang = toLang(Astro.currentLocale);
+const { meta, services } = ui[lang];
+
+const pageUrl = new URL(getRelativeLocaleUrl(lang), Astro.site).href;
+const djId = new URL("/#dj", Astro.site).href;
+const imageUrl = new URL("/og-image.png", Astro.site).href;
+
+const zlin = { "@type": "City", name: "Zlín" };
+const zlinRegion = { "@type": "AdministrativeArea", name: "Zlínský kraj" };
+
+const upcomingTours = (await getTourDates()).filter((tour) => !isPastTour(tour));
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": djId,
+      name: "DJ TOBINN",
+      alternateName: "DJTOBINN",
+      jobTitle: "DJ",
+      description: meta.description,
+      url: pageUrl,
+      image: imageUrl,
+      email: "mailto:booking@tobinn.cz",
+      sameAs: ["https://www.instagram.com/djtobinn"],
+      knowsAbout: ["House", "Dance music", "Whitegirl music"],
+      homeLocation: { ...zlin, containedInPlace: zlinRegion },
+    },
+    {
+      "@type": "Service",
+      name: services.serviceName,
+      serviceType: "DJ",
+      description: services.intro,
+      url: pageUrl,
+      provider: { "@id": djId },
+      areaServed: [zlin, zlinRegion],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: services.serviceName,
+        itemListElement: services.items.map((item) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: item.title,
+            description: item.detail,
+          },
+        })),
+      },
+    },
+    ...upcomingTours.map((tour) => ({
+      "@type": "MusicEvent",
+      name: `${tour.venue ?? tour.placeName} – DJ TOBINN`,
+      startDate: tour.isoDate,
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      image: imageUrl,
+      location: {
+        "@type": "Place",
+        name: tour.placeName,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: tour.locality,
+          addressCountry: "CZ",
+        },
+      },
+      performer: { "@id": djId },
+    })),
+  ],
+};
+
+// Escape "<" so the JSON can never close the script tag early
+const json = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+---
+
+<script type="application/ld+json" set:html={json} />

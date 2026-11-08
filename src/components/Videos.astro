@@ -1,9 +1,12 @@
 ---
 // src/components/Videos.astro
+import { toLang, ui } from "../i18n/ui";
+
+const { videos: t } = ui[toLang(Astro.currentLocale)];
 const videos = [
-  { id: 1, src: "/videos/dj1.mp4", title: "MUSIC CLUB SUD" },
-  { id: 2, src: "/videos/dj2.mp4", title: "MUSIC CLUB SUD" },
-  { id: 3, src: "/videos/dj3.mp4", title: "STUDIO SESSION" },
+  { id: 1, src: "/videos/dj1.mp4", poster: "/videos/dj1.jpg", title: "MUSIC CLUB SUD" },
+  { id: 2, src: "/videos/dj2.mp4", poster: "/videos/dj2.jpg", title: "MUSIC CLUB SUD" },
+  { id: 3, src: "/videos/dj3.mp4", poster: "/videos/dj3.jpg", title: "STUDIO SESSION" },
 ];
 ---
 
@@ -12,16 +15,13 @@ const videos = [
   class="pt-12 lg:pt-24 border-t border-white/20 relative z-10 bg-black w-full overflow-hidden"
 >
   <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
-    <h2
-      class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
-    >
-      VIDEO
-    </h2>
-    <h2
-      class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
-    >
-      ARCHIVE
-    </h2>
+    {
+      t.heading.map((line) => (
+        <h2 class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12">
+          {line}
+        </h2>
+      ))
+    }
   </div>
 
   <div class="">
@@ -31,15 +31,14 @@ const videos = [
           <div class="relative w-full aspect-3/4 overflow-hidden group transition-colors">
             <video
               src={video.src}
+              poster={video.poster}
               class="custom-video w-full h-full object-cover grayscale opacity-80 md:hover:grayscale-0 md:hover:opacity-100 transition-all duration-500 cursor-pointer"
               muted
               loop
               playsinline
               preload="metadata"
               aria-hidden="true"
-            >
-              <track kind="captions" src="" label="English" srclang="en" />
-            </video>
+            />
 
             {/* Optional overlay text if needed */}
             <div class="absolute bottom-4 left-4 z-20 pointer-events-none mix-blend-difference text-white opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 mobile-title">

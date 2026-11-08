@@ -1,19 +1,20 @@
 ---
+import { toLang, ui } from "../i18n/ui";
 
+const { about } = ui[toLang(Astro.currentLocale)];
 ---
 
 <section
   id="about"
   class="relative z-10 bg-[#050505] flex flex-col justify-center px-6 sm:px-12 py-16 lg:py-32 border-t border-white/20"
 >
-  <div class="max-w-[1600px] w-full mx-auto">
+  <div class="max-w-[1600px] w-full mx-auto @container">
     <h2
-      class="display-text uppercase tracking-tighter text-[clamp(24px,10vw,4rem)] sm:text-[clamp(4rem,9vw,170px)] leading-[0.8] text-white m-0 whitespace-nowrap "
+      class="display-text uppercase tracking-tighter text-[9.6cqw] leading-[0.8] text-white m-0 whitespace-nowrap"
     >
-      17-YEAR-OLD DJ.<br />
-      HOUSE & EDM. <span
-        class="text-transparent"
-        style="-webkit-text-stroke: 2px #ffffff;"><br />LOUD SETS.</span
+      {about.lines.map((line) => <>{line}<br /></>)}
+      <span class="text-transparent" style="-webkit-text-stroke: 2px #ffffff;"
+        >{about.outlinedLine}</span
       >
     </h2>
   </div>

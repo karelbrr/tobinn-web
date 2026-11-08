@@ -1,22 +1,15 @@
 ---
-import { getCollection } from "astro:content";
+import { getTourDates, isPastTour } from "../lib/tours";
+import { toLang, ui } from "../i18n/ui";
 
-const tours = await getCollection("tours");
+const { tour } = ui[toLang(Astro.currentLocale)];
 
-const parseDate = (dateString: string) => {
-  const [day, month, year] = dateString.split(".");
-  // Assumes 20YY format
-  return new Date(
-    `20${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
-  );
-};
-
-const dates = tours
-  .map((t) => t.data)
-  .sort((a, b) => parseDate(a.date).getTime() - parseDate(b.date).getTime());
-
-const now = new Date();
-now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+// Next gig first; past gigs follow, most recent first
+const tourDates = await getTourDates();
+const dates = [
+  ...tourDates.filter((item) => !isPastTour(item)),
+  ...tourDates.filter(isPastTour).reverse(),
+];
 ---
 
 <section
@@ -24,22 +17,19 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
   class="py-12 lg:py-24 border-t border-white/20 relative z-10 w-full overflow-hidden"
 >
   <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
-    <h2
-      class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
-    >
-      TOUR
-    </h2>
-    <h2
-      class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12"
-    >
-      DATES
-    </h2>
+    {
+      tour.heading.map((line) => (
+        <h2 class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12">
+          {line}
+        </h2>
+      ))
+    }
   </div>
 
   <div class="flex flex-col pt-8 lg:pt-16 px-6 sm:px-12">
     {
       dates.map((item) => {
-        const isPast = parseDate(item.date) < now;
+        const isPast = isPastTour(item);
 
         return (
           <div
@@ -47,7 +37,7 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
           >
             <div class="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-8 lg:gap-16 w-full sm:w-auto">
               <span
-                class={`text-xs sm:text-sm uppercase tracking-wider font-mono transition-colors ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
+                class={`sm:w-20 lg:w-24 shrink-0 text-xs sm:text-sm uppercase tracking-wider font-mono tabular-nums transition-colors ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
               >
                 {item.date}
               </span>
@@ -61,7 +51,7 @@ now.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
               <span
                 class={`text-xs sm:text-sm uppercase tracking-widest font-mono transition-colors truncate ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
               >
-                {item.venue} {isPast && <span class="ml-1">(PAST)</span>}
+                {item.venue} {isPast && <span class="ml-1">{tour.past}</span>}
               </span>
             </div>
           </div>

@@ -1,0 +1,68 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitch from "../components/LanguageSwitch.astro";
+import { toLang, ui } from "../i18n/ui";
+import type { LegalDocument } from "../i18n/legal";
+
+interface Props {
+  document: LegalDocument;
+}
+
+const { document } = Astro.props;
+const lang = toLang(Astro.currentLocale);
+const { legal: t } = ui[lang];
+---
+
+<Layout title={`${document.title} - DJTOBINN`}>
+  <main
+    class="w-full min-h-screen bg-[#050505] text-white py-24 sm:py-32 px-6 sm:px-12 flex flex-col gap-16 max-w-5xl mx-auto"
+  >
+    <div class="border-b border-white/20 pb-8 flex flex-col items-start gap-8">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href={getRelativeLocaleUrl(lang)}
+          class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 border border-white/20 px-4 py-2 hover:bg-white hover:text-black hover:border-white transition-all"
+        >
+          {t.returnToMain}
+        </a>
+        <LanguageSwitch />
+      </div>
+      <h1
+        class="display-text text-5xl sm:text-7xl uppercase tracking-tighter leading-[0.8] [&:lang(cs)]:leading-none m-0"
+      >
+        {document.title}
+      </h1>
+    </div>
+
+    <div
+      class="font-sans text-base sm:text-lg leading-relaxed text-white/80 flex flex-col gap-10 font-light"
+    >
+      {
+        [...document.sections, document.closing].map((section) => (
+          <section
+            class:list={[
+              "flex flex-col gap-3",
+              section === document.closing && "border-t border-white/20 pt-10",
+            ]}
+          >
+            <h2 class="text-white text-xl sm:text-2xl tracking-tight font-medium">
+              {section.heading}
+            </h2>
+            <p>
+              {section.body}{" "}
+              {section.email && (
+                <a
+                  href={`mailto:${section.email}`}
+                  class="text-white hover:underline font-medium"
+                >
+                  {section.email}
+                </a>
+              )}
+            </p>
+          </section>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

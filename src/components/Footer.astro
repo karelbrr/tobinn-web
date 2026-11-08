@@ -1,5 +1,10 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { toLang, ui } from "../i18n/ui";
 
+const lang = toLang(Astro.currentLocale);
+const { footer: t } = ui[lang];
 ---
 
 <footer
@@ -37,14 +42,14 @@
           class="flex flex-col items-start md:items-end gap-2 sm:gap-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black text-left md:text-right"
         >
           <a
-            href="/privacy"
+            href={getRelativeLocaleUrl(lang, "privacy")}
             class="py-2 sm:py-1 hover:text-gray-600 transition-all block"
-            >PRIVACY POLICY</a
+            >{t.privacy}</a
           >
           <a
-            href="/terms"
+            href={getRelativeLocaleUrl(lang, "terms")}
             class="py-2 sm:py-1 hover:text-gray-600 transition-all block"
-            >TERMS & CONDITIONS</a
+            >{t.terms}</a
           >
           <a
             href="https://karelbraborec.com"
@@ -58,8 +63,10 @@
           class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest flex flex-col items-start md:items-end text-left md:text-right gap-1"
         >
           <span>&copy; {new Date().getFullYear()} DJTOBINN.</span>
-          <span>ALL RIGHTS RESERVED.</span>
+          <span>{t.rightsReserved}</span>
         </div>
+
+        <LanguageSwitch class="py-2 sm:py-1 text-[10px] sm:text-xs" />
       </div>
     </div>
   </div>

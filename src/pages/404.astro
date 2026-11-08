@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="404 | DJTOBINN">
+<Layout title="404 | DJTOBINN" noindex>
   <main
     class="min-h-screen flex flex-col items-center justify-center text-center px-6"
   >
@@ -13,15 +13,30 @@ import Footer from "../components/Footer.astro";
       404
     </h1>
     <p
-      class="font-sans font-bold text-white uppercase tracking-widest text-4xl sm:text-4xl mb-12"
+      class="font-sans font-bold text-white uppercase tracking-widest text-4xl sm:text-4xl mb-2"
     >
       PAGE NOT FOUND
     </p>
-    <a
-      href="/"
-      class="font-mono text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/50 hover:border-white/50 transition-colors"
+    <p
+      lang="cs"
+      class="font-sans font-bold text-white/50 uppercase tracking-widest text-sm sm:text-base mb-12"
     >
-      RETURN HOME
-    </a>
+      STRÁNKA NENALEZENA
+    </p>
+    <div class="flex gap-8">
+      <a
+        href="/"
+        class="font-mono text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/50 hover:border-white/50 transition-colors"
+      >
+        RETURN HOME
+      </a>
+      <a
+        href="/cs/"
+        lang="cs"
+        class="font-mono text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/50 hover:border-white/50 transition-colors"
+      >
+        ZPĚT NA ÚVOD
+      </a>
+    </div>
   </main>
 </Layout>

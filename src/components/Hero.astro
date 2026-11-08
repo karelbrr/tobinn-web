@@ -1,19 +1,25 @@
 ---
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { toLang, ui } from "../i18n/ui";
 
+const { nav } = ui[toLang(Astro.currentLocale)];
 ---
 
 <header class="relative w-full bg-[#050505] overflow-hidden">
   <div
     class="relative z-10 w-full px-6 sm:px-12 lg:pb-10 flex flex-col items-center @container"
   >
-    <!-- Mobile Menu Toggle Button -->
-    <div class="md:hidden flex justify-end w-full pt-8 font-mono text-white">
+    <!-- Language Switch & Mobile Menu Toggle Button -->
+    <div
+      class="flex justify-between md:justify-end items-center w-full pt-8 font-mono text-white"
+    >
+      <LanguageSwitch />
       <button
         id="mobile-menu-btn"
-        aria-label="Open menu"
-        class="uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2"
+        aria-label={nav.openMenu}
+        class="md:hidden uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2"
       >
-        <span>Menu</span>
+        <span>{nav.menu}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -35,11 +41,11 @@
 
     <!-- Massive Text -->
     <h1
-      class="flex justify-between w-full font-sans font-extrabold text-[17.5cqw] leading-[0.8] pb-5 lg:pb-0 uppercase m-0 p-0 pt-6 md:pt-10 select-none text-white whitespace-nowrap opacity-90"
+      class="flex justify-between w-full font-sans font-extrabold text-[17.5cqw] leading-[0.8] pb-5 lg:pb-0 uppercase m-0 p-0 pt-6 select-none text-white whitespace-nowrap opacity-90"
     >
-      <span class="ml-[-0.06em]">D</span><span>J</span><span>T</span><span
+      <span class="ml-[-0.068em]">D</span><span>J</span><span>T</span><span
         >O</span
-      ><span>B</span><span>I</span><span>N</span><span class="mr-[-0.05em]"
+      ><span>B</span><span>I</span><span>N</span><span class="mr-[-0.068em]"
         >N</span
       >
     </h1>
@@ -52,7 +58,7 @@
   >
     <button
       id="close-menu-btn"
-      aria-label="Close menu"
+      aria-label={nav.closeMenu}
       class="absolute top-6 right-6 text-white p-4 hover:text-gray-400 transition-colors"
     >
       <svg
@@ -72,20 +78,25 @@
       class="flex flex-col items-center gap-10 text-2xl sm:text-3xl uppercase font-bold tracking-widest font-mono text-white"
     >
       <a href="#about" class="mobile-link hover:text-gray-400 transition-colors"
-        >About</a
+        >{nav.about}</a
+      >
+      <a
+        href="#services"
+        class="mobile-link hover:text-gray-400 transition-colors"
+        >{nav.services}</a
       >
       <a href="#tour" class="mobile-link hover:text-gray-400 transition-colors"
-        >Tour</a
+        >{nav.tour}</a
       >
       <a href="#audio" class="mobile-link hover:text-gray-400 transition-colors"
-        >Audio</a
+        >{nav.audio}</a
       >
       <a
         href="#videos"
-        class="mobile-link hover:text-gray-400 transition-colors">Video</a
+        class="mobile-link hover:text-gray-400 transition-colors">{nav.video}</a
       >
       <a href="#book" class="mobile-link hover:text-gray-400 transition-colors"
-        >Book</a
+        >{nav.book}</a
       >
     </nav>
   </div>

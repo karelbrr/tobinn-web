@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /privacy
 Disallow: /terms
+Disallow: /cs/privacy
+Disallow: /cs/terms
 
 Sitemap: https://tobinn.cz/sitemap-index.xml
