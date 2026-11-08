@@ -18,6 +18,7 @@ const audioCollection = defineCollection({
     type: z.string(),
     title: z.string(),
     description: z.string(),
+    url: z.string().url(),
   }),
 });
 
