@@ -1,148 +1,28 @@
 ---
-import LanguageSwitch from "./LanguageSwitch.astro";
 import { toLang, ui } from "../i18n/ui";
+import { getTourDates, isPastTour } from "../lib/tours";
 
-const { nav } = ui[toLang(Astro.currentLocale)];
+const { hero } = ui[toLang(Astro.currentLocale)];
+const next = (await getTourDates()).find((tour) => !isPastTour(tour));
 ---
 
-<header class="relative w-full bg-[#050505] overflow-hidden">
-  <div
-    class="relative z-10 w-full px-6 sm:px-12 lg:pb-10 flex flex-col items-center @container"
-  >
-    <!-- Language Switch & Mobile Menu Toggle Button -->
-    <div
-      class="flex justify-between md:justify-end items-center w-full pt-8 font-mono text-white"
-    >
-      <LanguageSwitch />
-      <button
-        id="mobile-menu-btn"
-        aria-label={nav.openMenu}
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-        class="md:hidden uppercase text-xs font-bold tracking-widest hover:text-gray-400 transition-colors flex items-center gap-2 py-3 -my-3"
-      >
-        <span>{nav.menu}</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          ><line x1="4" x2="20" y1="12" y2="12"></line><line
-            x1="4"
-            x2="20"
-            y1="6"
-            y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg
-        >
-      </button>
-    </div>
-
-    <!-- Massive Text -->
-    <h1
-      class="flex justify-between w-full font-sans font-extrabold text-[17.5cqw] leading-[0.8] pb-5 lg:pb-0 uppercase m-0 p-0 pt-6 select-none text-white whitespace-nowrap opacity-90"
-    >
-      <span class="ml-[-0.068em]">D</span><span>J</span><span>T</span><span
-        >O</span
-      ><span>B</span><span>I</span><span>N</span><span class="mr-[-0.068em]"
-        >N</span
-      >
-    </h1>
-  </div>
-
-  <!-- Mobile Menu Overlay -->
-  <div
-    id="mobile-menu"
-    class="fixed inset-0 bg-[#050505]/95 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
-  >
-    <button
-      id="close-menu-btn"
-      aria-label={nav.closeMenu}
-      class="absolute top-6 right-6 text-white p-4 hover:text-gray-400 transition-colors"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        ><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
-      >
-    </button>
-    <nav
-      class="flex flex-col items-center gap-10 text-2xl sm:text-3xl uppercase font-bold tracking-widest font-mono text-white"
-    >
-      <a href="#about" class="mobile-link hover:text-gray-400 transition-colors"
-        >{nav.about}</a
-      >
-      <a
-        href="#services"
-        class="mobile-link hover:text-gray-400 transition-colors"
-        >{nav.services}</a
-      >
-      <a href="#tour" class="mobile-link hover:text-gray-400 transition-colors"
-        >{nav.tour}</a
-      >
-      <a href="#audio" class="mobile-link hover:text-gray-400 transition-colors"
-        >{nav.audio}</a
-      >
-      <a
-        href="#videos"
-        class="mobile-link hover:text-gray-400 transition-colors">{nav.video}</a
-      >
-      <a href="#book" class="mobile-link hover:text-gray-400 transition-colors"
-        >{nav.book}</a
-      >
-    </nav>
+<header
+  id="hero"
+  data-stage-key="deck-wide"
+  class="relative min-h-svh flex flex-col justify-end px-gutter pb-gutter pt-28"
+>
+  <div class="max-w-column flex flex-col gap-6 pb-8">
+    <h1 data-split class="text-display m-0 text-paper">DJ Tobinn</h1>
+    <p data-hero-fade class="text-lead text-paper/75 m-0">{hero.tagline}</p>
+    {
+      next && (
+        <a data-hero-fade href="#tour" class="group flex items-baseline gap-3 text-caption font-mono text-paper/60 hover:text-paper transition-colors">
+          <span>{hero.next}</span>
+          <span class="text-paper group-hover:underline underline-offset-4">
+            {next.date} · {next.city}
+          </span>
+        </a>
+      )
+    }
   </div>
 </header>
-
-<script>
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  const closeMenuBtn = document.getElementById("close-menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const mobileLinks = document.querySelectorAll(".mobile-link");
-
-  function openMenu() {
-    if (!mobileMenu) return;
-    mobileMenuBtn?.setAttribute("aria-expanded", "true");
-    mobileMenu.classList.remove("hidden");
-    mobileMenu.classList.add("flex");
-    // Small delay to allow display block to apply before changing opacity
-    setTimeout(() => {
-      mobileMenu.classList.remove("opacity-0");
-      mobileMenu.classList.add("opacity-100");
-    }, 10);
-    document.body.style.overflow = "hidden";
-    closeMenuBtn?.focus();
-  }
-
-  function closeMenu() {
-    if (!mobileMenu || mobileMenu.classList.contains("hidden")) return;
-    mobileMenuBtn?.setAttribute("aria-expanded", "false");
-    mobileMenu.classList.remove("opacity-100");
-    mobileMenu.classList.add("opacity-0");
-    setTimeout(() => {
-      mobileMenu.classList.remove("flex");
-      mobileMenu.classList.add("hidden");
-    }, 300);
-    document.body.style.overflow = "";
-    mobileMenuBtn?.focus();
-  }
-
-  mobileMenuBtn?.addEventListener("click", openMenu);
-  closeMenuBtn?.addEventListener("click", closeMenu);
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeMenu();
-  });
-</script>

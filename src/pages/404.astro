@@ -2,40 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="404 | DJTOBINN" noindex>
-  <main
-    class="min-h-screen flex flex-col items-center justify-center text-center px-6"
-  >
-    <h1
-      class="display-text text-[clamp(6rem,30vw,220px)] leading-[0.8] text-white tracking-tighter mb-6"
-    >
-      404
-    </h1>
-    <p
-      class="font-sans font-bold text-white uppercase tracking-widest text-3xl sm:text-4xl mb-2"
-    >
-      PAGE NOT FOUND
+<Layout title="404 | DJ TOBINN" noindex>
+  <main class="min-h-screen flex flex-col justify-center px-gutter max-w-3xl mx-auto w-full gap-6">
+    <h1 class="text-display m-0">404</h1>
+    <p class="text-lead text-paper/80 m-0">
+      Page not found. <span lang="cs" class="text-paper/60">Stránka nenalezena.</span>
     </p>
-    <p
-      lang="cs"
-      class="font-sans font-bold text-white/50 uppercase tracking-widest text-sm sm:text-base mb-12"
-    >
-      STRÁNKA NENALEZENA
-    </p>
-    <div class="flex gap-8">
-      <a
-        href="/"
-        class="font-mono text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/50 hover:border-white/50 transition-colors"
-      >
-        RETURN HOME
-      </a>
-      <a
-        href="/cs/"
-        lang="cs"
-        class="font-mono text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/50 hover:border-white/50 transition-colors"
-      >
-        ZPĚT NA ÚVOD
-      </a>
+    <div class="flex gap-8 text-caption">
+      <a href="/" class="py-2 underline underline-offset-4 decoration-paper/40 hover:decoration-paper transition-colors">Return home</a>
+      <a href="/cs/" lang="cs" class="py-2 underline underline-offset-4 decoration-paper/40 hover:decoration-paper transition-colors">Zpět na úvod</a>
     </div>
   </main>
 </Layout>

@@ -1,75 +1,20 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import LanguageSwitch from "./LanguageSwitch.astro";
 import { toLang, ui } from "../i18n/ui";
 
 const lang = toLang(Astro.currentLocale);
 const { footer: t } = ui[lang];
+const linkClass = "py-2 hover:text-paper transition-colors";
 ---
 
-<footer
-  class="w-full bg-white text-black pt-24 md:pt-50 border-t-4 border-black overflow-hidden relative selection:bg-black selection:text-[#C0C0C0]"
->
-  <!-- Main Footer Content -->
-  <div
-    class="w-full px-6 sm:px-12 pb-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
-  >
-    <!-- Abstract / Brutalist Info -->
-    <div class="flex flex-col gap-4 pt-5 md:pt-0">
-      <div class="flex flex-col gap-2">
-        <a
-          href="mailto:booking@tobinn.cz"
-          class="font-sans font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter"
-        >
-          BOOKING
-        </a>
-        <a
-          target="_blank"
-          rel="noopener"
-          href="https://www.instagram.com/djtobinn"
-          class="font-sans font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter"
-        >
-          INSTAGRAM
-        </a>
-      </div>
-    </div>
-
-    <!-- Right Side: Year & Technical Links -->
-    <div
-      class="flex flex-col items-start md:items-end w-full h-full justify-between gap-12 md:gap-0"
-    >
-      <div class="flex flex-col items-start md:items-end w-full gap-6 md:gap-4">
-        <div
-          class="flex flex-col items-start md:items-end gap-2 sm:gap-1 font-mono text-xs font-bold uppercase tracking-widest text-black text-left md:text-right"
-        >
-          <a
-            href={getRelativeLocaleUrl(lang, "privacy")}
-            class="py-3 sm:py-1 hover:text-gray-600 transition-colors block"
-            >{t.privacy}</a
-          >
-          <a
-            href={getRelativeLocaleUrl(lang, "terms")}
-            class="py-3 sm:py-1 hover:text-gray-600 transition-colors block"
-            >{t.terms}</a
-          >
-          <a
-            href="https://karelbraborec.com"
-            target="_blank"
-            rel="noopener"
-            class="py-3 sm:py-1 hover:text-gray-600 transition-colors text-black block"
-            >KARELBRABOREC.COM</a
-          >
-        </div>
-
-        <div
-          class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest flex flex-col items-start md:items-end text-left md:text-right gap-1"
-        >
-          <span>&copy; {new Date().getFullYear()} DJTOBINN.</span>
-          <span>{t.rightsReserved}</span>
-        </div>
-
-        <LanguageSwitch class="py-2 sm:py-1" />
-      </div>
-    </div>
+<footer class="relative z-10 bg-ink border-t border-line px-gutter py-8">
+  <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 text-caption text-paper/60">
+    <span>&copy; {new Date().getFullYear()} DJ Tobinn. {t.rightsReserved}</span>
+    <nav class="flex flex-wrap gap-x-6">
+      <a href="https://www.instagram.com/djtobinn" target="_blank" rel="noopener" class={linkClass}>Instagram</a>
+      <a href={getRelativeLocaleUrl(lang, "privacy")} class={linkClass}>{t.privacy}</a>
+      <a href={getRelativeLocaleUrl(lang, "terms")} class={linkClass}>{t.terms}</a>
+      <a href="https://karelbraborec.com" target="_blank" rel="noopener" class={linkClass}>karelbraborec.com</a>
+    </nav>
   </div>
 </footer>

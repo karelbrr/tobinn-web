@@ -1,8 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Stage from "../components/Stage.astro";
+import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
-import Services from "../components/Services.astro";
 import StructuredData from "../components/StructuredData.astro";
 import Tour from "../components/Tour.astro";
 import Audio from "../components/Audio.astro";
@@ -16,14 +17,29 @@ const { meta } = ui[toLang(Astro.currentLocale)];
 
 <Layout title={meta.title}>
   <StructuredData slot="head" />
+  <script is:inline slot="head">
+    // The intro plays once per visit and never for visitors who asked for less motion
+    try {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduced && !sessionStorage.getItem("tobinn-intro")) {
+        document.documentElement.classList.add("show-loader");
+        sessionStorage.setItem("tobinn-intro", "1");
+      }
+    } catch {
+      // Storage blocked: skip the intro rather than risk showing it on every page
+    }
+  </script>
+  <Stage />
+  <Header />
   <main class="grow flex flex-col relative z-10">
-    <Hero />
-    <About />
-    <Services />
-    <Tour />
-    <Audio />
-    <Videos />
-    <Booking />
-    <Footer />
+    <div id="stage-scope" class="flex flex-col">
+      <Hero />
+      <About />
+      <Tour />
+      <Audio />
+      <Videos />
+      <Booking />
+    </div>
   </main>
+  <Footer />
 </Layout>

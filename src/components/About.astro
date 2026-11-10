@@ -1,21 +1,26 @@
 ---
 import { toLang, ui } from "../i18n/ui";
 
-const { about } = ui[toLang(Astro.currentLocale)];
+const { about, services } = ui[toLang(Astro.currentLocale)];
 ---
 
-<section
-  id="about"
-  class="relative z-10 bg-[#050505] flex flex-col justify-center px-6 sm:px-12 py-16 lg:py-32 border-t border-white/20"
->
-  <div class="max-w-[1600px] w-full mx-auto @container">
-    <h2
-      class="display-text uppercase tracking-tighter text-[9.6cqw] leading-[0.8] text-white m-0 whitespace-nowrap"
-    >
-      {about.lines.map((line) => <>{line}<br /></>)}
-      <span class="text-transparent" style="-webkit-text-stroke: 2px #ffffff;"
-        >{about.outlinedLine}</span
-      >
-    </h2>
+<!-- Who the DJ is and what he plays for whom: About and Services in one -->
+<section id="about" data-stage-key="deck-close" class="relative min-h-svh flex items-end lg:items-center px-gutter py-section">
+  <div data-presence class="max-w-column flex flex-col gap-8">
+    <h2 class="text-heading m-0">{about.heading}</h2>
+    <p class="text-lead text-paper/85 m-0">{about.text}</p>
+    <ul class="flex flex-col gap-3 m-0 p-0 list-none">
+      {
+        services.items.map((item) => (
+          <li class="flex flex-col">
+            <span class="text-paper">{item.title}</span>
+            <span class="text-caption text-paper/60">{item.detail}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="text-caption font-mono text-paper/60 m-0">
+      {services.genres.join(" · ")}<br />{services.area}
+    </p>
   </div>
 </section>

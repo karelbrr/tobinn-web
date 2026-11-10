@@ -1,6 +1,168 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Geist Sans", sans-serif;
-  --font-mono: "Geist Sans", sans-serif;
+  /* One modern sans for everything; its mono sibling only for dates and small captions */
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-ink: #050505;
+  --color-paper: #f4f4f0;
+  --color-line: rgb(244 244 240 / 0.14);
+
+  /* Type scale: five sizes and nothing else */
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.04em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.5;
+  --text-heading: clamp(1.75rem, 3vw, 2.5rem);
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.02em;
+  --text-display: clamp(2.75rem, 7vw, 5.5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.04em;
+
+  /* Spacing: the page edge, the room between sections, the width of the text column */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-section: clamp(8rem, 32vh, 16rem);
+  --spacing-column: 28rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-paper);
+    outline-offset: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* ---------- 3D stage behind the home page ---------- */
+
+  .stage {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 100lvh;
+    z-index: 0;
+    pointer-events: none;
+    /* Fallback without WebGL: a faint white glow */
+    background:
+      radial-gradient(40% 40% at 72% 45%, rgb(244 244 240 / 0.08), transparent 70%),
+      var(--color-ink);
+  }
+
+  .stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* The scene renders at a console's resolution; stretch it with hard pixels, not blur */
+    image-rendering: pixelated;
+    opacity: 0;
+    transition: opacity 1.4s var(--ease-out-expo);
+  }
+
+  .stage.is-ready canvas {
+    opacity: 1;
+  }
+
+  .stage.is-fallback canvas {
+    display: none;
+  }
+
+  /* Keeps the text readable: the left column on a desktop, the lower part on a phone */
+  .stage-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgb(5 5 5 / 0.35), rgb(5 5 5 / 0.55) 28%, rgb(5 5 5 / 0.85) 55%, rgb(5 5 5 / 0.92));
+  }
+
+  @media (min-width: 1024px) {
+    .stage-scrim {
+      background:
+        linear-gradient(90deg, rgb(5 5 5 / 0.9) 0%, rgb(5 5 5 / 0.72) 32%, rgb(5 5 5 / 0.3) 46%, transparent 60%),
+        linear-gradient(to bottom, rgb(5 5 5 / 0.5), transparent 18%);
+    }
+  }
+
+  /* ---------- Intro loader: black, the name and a counter ---------- */
+
+  .loader {
+    display: none;
+  }
+
+  .js.show-loader .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--spacing-gutter);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    opacity: 1;
+    transition: opacity 0.8s var(--ease-out-expo);
+    /* Gone on its own if the script never runs */
+    animation: loader-failsafe 0s 3s forwards;
+  }
+
+  .js.show-loader .loader.is-done {
+    opacity: 0;
+  }
+
+  @keyframes loader-failsafe {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  /* ---------- The name rises letter by letter out of its mask ---------- */
+
+  .split-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* Room for Czech carons above the capitals and for descenders */
+    padding-block: 0.12em 0.06em;
+    margin-block: -0.12em -0.06em;
+  }
+
+  .split-piece {
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage canvas,
+  .js.show-loader .loader {
+    transition: none;
+  }
 }

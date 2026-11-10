@@ -1,0 +1,17 @@
+---
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { toLang, ui } from "../i18n/ui";
+
+const { nav } = ui[toLang(Astro.currentLocale)];
+---
+
+<!-- The name on the left, the language and the way to booking on the right: nothing else -->
+<header class="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-gutter py-5">
+  <a href="#hero" class="font-medium tracking-tight text-paper">DJ Tobinn</a>
+  <div class="flex items-center gap-6 text-caption">
+    <LanguageSwitch />
+    <a href="#book" class="py-2 text-paper underline underline-offset-4 decoration-paper/40 hover:decoration-paper transition-colors">
+      {nav.book}
+    </a>
+  </div>
+</header>

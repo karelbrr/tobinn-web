@@ -2,7 +2,7 @@
 import { getTourDates, isPastTour } from "../lib/tours";
 import { toLang, ui } from "../i18n/ui";
 
-const { tour } = ui[toLang(Astro.currentLocale)];
+const { tour, hero } = ui[toLang(Astro.currentLocale)];
 
 // Next gig first; past gigs follow, most recent first
 const tourDates = await getTourDates();
@@ -10,53 +10,38 @@ const dates = [
   ...tourDates.filter((item) => !isPastTour(item)),
   ...tourDates.filter(isPastTour).reverse(),
 ];
+const nextIndex = dates.findIndex((item) => !isPastTour(item));
 ---
 
-<section
-  id="tour"
-  class="py-12 lg:py-24 border-t border-white/20 relative z-10 w-full overflow-hidden"
->
-  <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
-    {
-      tour.heading.map((line) => (
-        <h2 class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12">
-          {line}
-        </h2>
-      ))
-    }
-  </div>
-
-  <div class="flex flex-col pt-8 lg:pt-16 px-6 sm:px-12">
-    {
-      dates.map((item) => {
-        const isPast = isPastTour(item);
-
-        return (
-          <div
-            class={`flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 border-b border-white/20 px-4 -mx-4 transition-all duration-300 ${isPast ? "opacity-70 cursor-default grayscale" : "group hover:bg-[#ffffff]"}`}
-          >
-            <div class="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-8 lg:gap-16 w-full sm:w-auto">
-              <span
-                class={`sm:w-20 lg:w-24 shrink-0 text-xs sm:text-sm uppercase tracking-wider font-mono tabular-nums transition-colors ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
-              >
-                {item.date}
+<!-- Hovering an upcoming date turns the beam onto the speaker -->
+<section id="tour" data-stage-key="speaker" class="relative min-h-svh flex items-end lg:items-center px-gutter py-section">
+  <div data-presence class="w-full max-w-column flex flex-col gap-8">
+    <h2 class="text-heading m-0">{tour.heading}</h2>
+    <ol class="flex flex-col m-0 p-0 list-none">
+      {
+        dates.map((item, index) => {
+          const isPast = isPastTour(item);
+          return (
+            <li
+              data-stage-spot={isPast ? undefined : ""}
+              class:list={[
+                "grid grid-cols-[5.5rem_1fr] gap-x-4 py-4 border-t border-line transition-colors",
+                isPast ? "text-paper/55" : "text-paper/85 hover:text-paper",
+              ]}
+            >
+              <span class="text-caption font-mono pt-1 tabular-nums">{item.date}</span>
+              <span class="flex flex-col">
+                <span class:list={[isPast && "line-through"]}>{item.city}</span>
+                <span class="text-caption text-paper/55">
+                  {item.venue}
+                  {index === nextIndex && <span class="ml-2 text-paper">· {hero.next}</span>}
+                  {isPast && <span class="ml-2">· {tour.past}</span>}
+                </span>
               </span>
-              <span
-                class={`display-text text-3xl md:text-4xl lg:text-5xl transition-colors ${isPast ? "line-through decoration-white/60 text-white" : "text-white group-hover:text-black"}`}
-              >
-                {item.city}
-              </span>
-            </div>
-            <div class="mt-4 sm:mt-0 flex justify-between w-full sm:w-auto items-center sm:gap-6 md:gap-16">
-              <span
-                class={`text-xs sm:text-sm uppercase tracking-widest font-mono transition-colors truncate ${isPast ? "text-white" : "text-white group-hover:text-black"}`}
-              >
-                {item.venue} {isPast && <span class="ml-1">{tour.past}</span>}
-              </span>
-            </div>
-          </div>
-        );
-      })
-    }
+            </li>
+          );
+        })
+      }
+    </ol>
   </div>
 </section>

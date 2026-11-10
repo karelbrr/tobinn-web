@@ -11,68 +11,32 @@ const mixes = audio
   .sort((a, b) => parseInt(a.id) - parseInt(b.id));
 ---
 
-<section
-  id="audio"
-  class="py-12 lg:py-24 border-t border-white/20 relative z-10 bg-[#050505] w-full overflow-hidden"
->
-  <div class="flex flex-col w-full border-b border-white/20 pb-8 lg:pb-16">
-    {
-      t.heading.map((line) => (
-        <h2 class="display-text text-[clamp(3rem,15vw,220px)] leading-[0.8] tracking-tighter text-white m-0 px-6 sm:px-12">
-          {line}
-        </h2>
-      ))
-    }
-  </div>
-
-  <div class="pt-8 lg:pt-16 px-6 sm:px-12">
+<!-- The crowd shot; hovering a mix spins the records faster and gets the crowd jumping with hands up -->
+<section id="audio" data-stage-key="crowd" class="relative min-h-svh flex items-end lg:items-center px-gutter py-section">
+  <div data-presence class="w-full max-w-column flex flex-col gap-8">
+    <h2 class="text-heading m-0">{t.heading}</h2>
     {
       mixes.length === 0 ? (
-        <div class="border border-dashed border-white/30 p-8 sm:p-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div class="flex flex-col gap-4">
-            <p class="display-text text-3xl md:text-4xl lg:text-5xl text-white m-0">
-              {t.emptyTitle}
-            </p>
-            <p class="max-w-md text-xs sm:text-sm font-mono uppercase tracking-widest leading-relaxed text-white/60 m-0">
-              {t.emptyText}
-            </p>
-          </div>
-          <a
-            href="https://www.instagram.com/djtobinn"
-            target="_blank"
-            rel="noopener"
-            class="shrink-0 border-2 border-white bg-white text-black px-8 py-4 font-mono text-xs font-bold uppercase tracking-widest text-center hover:bg-transparent hover:text-white transition-colors"
-          >
+        <div class="flex flex-col gap-3">
+          <p class="text-lead m-0">{t.emptyTitle}</p>
+          <p class="text-paper/70 m-0">{t.emptyText}</p>
+          <a href="https://www.instagram.com/djtobinn" target="_blank" rel="noopener" class="self-start underline underline-offset-4 decoration-paper/40 hover:decoration-paper transition-colors">
             {t.emptyCta} ↗
           </a>
         </div>
       ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {mixes.map((mix) => (
-            <div class="border border-white/20 p-8 group hover:border-white transition-colors">
-              <div class="flex justify-between items-start mb-12">
-                <span class="display-text text-5xl text-white">{mix.id}</span>
-                <span class="text-[10px] uppercase tracking-widest font-mono bg-white text-black font-bold px-2 py-1">
-                  {mix.type}
-                </span>
-              </div>
-              <h3 class="display-text text-3xl mb-4">
-                {mix.title}
-              </h3>
-              <p class="text-xs font-mono uppercase tracking-widest mb-8">
-                {mix.description}
-              </p>
-              <a
-                href={mix.url}
-                target="_blank"
-                rel="noopener"
-                class="block w-full py-4 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest text-center hover:bg-transparent hover:text-white border-2 border-white transition-colors"
-              >
-                {t.listen} ↗
-              </a>
-            </div>
-          ))}
-        </div>
+        mixes.map((mix) => (
+          <article data-stage-boost class="flex flex-col gap-3">
+            <p class="text-caption font-mono text-paper/60 m-0">
+              {mix.id} · <span class="lowercase first-letter:uppercase inline-block">{mix.type}</span>
+            </p>
+            <h3 class="text-lead m-0 lowercase first-letter:uppercase">{mix.title}</h3>
+            <p class="text-paper/70 m-0 lowercase first-letter:uppercase">{mix.description}</p>
+            <a href={mix.url} target="_blank" rel="noopener" class="self-start mt-2 underline underline-offset-4 decoration-paper/40 hover:decoration-paper transition-colors">
+              {t.listen} ↗
+            </a>
+          </article>
+        ))
       )
     }
   </div>

@@ -1,0 +1,22 @@
+---
+// The fixed 3D stage behind the home page, the scrim that keeps the text readable and the intro loader
+import { toLang, ui } from "../i18n/ui";
+
+const { loading } = ui[toLang(Astro.currentLocale)];
+---
+
+<div id="stage" class="stage" aria-hidden="true">
+  <canvas id="stage-canvas"></canvas>
+</div>
+<div class="stage-scrim" aria-hidden="true"></div>
+
+<div id="loader" class="loader" aria-hidden="true">
+  <span class="font-medium tracking-tight">DJ Tobinn</span>
+  <span class="text-caption font-mono text-paper/60">{loading} <span id="loader-count" class="tabular-nums text-paper">000</span></span>
+</div>
+
+<script>
+  import { startHome } from "../lib/home";
+
+  startHome();
+</script>

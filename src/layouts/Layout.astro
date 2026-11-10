@@ -1,10 +1,6 @@
 ---
-import "@fontsource/geist-sans/300.css";
-import "@fontsource/geist-sans/400.css";
-import "@fontsource/geist-sans/500.css";
-import "@fontsource/geist-sans/700.css";
-import "@fontsource/geist-sans/800.css";
-import "@fontsource/archivo-black";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
 import "../styles/global.css";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import {
@@ -33,16 +29,14 @@ const alternateLangs = Object.keys(languages) as Lang[];
 const ogImageUrl = new URL("/og-image.png", Astro.site).href;
 ---
 
-<html lang={lang} class="bg-[#050505] overscroll-none">
+<html lang={lang} class="bg-ink overscroll-none">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content={meta.description}
-    />
+    <meta name="theme-color" content="#050505" />
+    <meta name="description" content={meta.description} />
     {
       noindex ? (
         <meta name="robots" content="noindex" />
@@ -77,62 +71,24 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
         ))
     }
     <meta property="og:title" content={title} />
-    <meta
-      property="og:description"
-      content={meta.ogDescription}
-    />
+    <meta property="og:description" content={meta.ogDescription} />
     <meta property="og:image" content={ogImageUrl} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content={title} />
-    <meta
-      property="twitter:description"
-      content={meta.ogDescription}
-    />
+    <meta property="twitter:description" content={meta.ogDescription} />
     <meta property="twitter:image" content={ogImageUrl} />
 
     <title>{title}</title>
     <slot name="head" />
-    <style is:global>
-      :root {
-        --bg: #050505;
-        --fg: #ffffff;
-      }
-      body {
-        background-color: var(--bg);
-        color: var(--fg);
-        font-family: "Geist Sans", sans-serif;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      .display-text {
-        font-family: "Archivo Black", sans-serif;
-        text-transform: uppercase;
-      }
-
-      @media (prefers-reduced-motion: no-preference) {
-        html {
-          scroll-behavior: smooth;
-        }
-      }
-
-      :focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 3px;
-      }
-
-      ::selection {
-        background-color: #ffffff;
-        color: #050505;
-      }
-    </style>
+    <script is:inline>
+      // Script-only styles such as the intro loader apply only once scripts run
+      document.documentElement.classList.add("js");
+    </script>
   </head>
-  <body
-    class="antialiased selection:bg-[#ffffff] selection:text-[#050505] border-x border-white/20 max-w-[1600px] mx-auto min-h-screen flex flex-col relative"
-  >
+  <body class="antialiased min-h-screen flex flex-col relative">
     <slot />
   </body>
 </html>
+
