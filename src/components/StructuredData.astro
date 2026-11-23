@@ -4,7 +4,7 @@ import { toLang, ui } from "../i18n/ui";
 import { getTourDates, isPastTour } from "../lib/tours";
 
 const lang = toLang(Astro.currentLocale);
-const { meta, services } = ui[lang];
+const { meta, services, tour: tourText } = ui[lang];
 
 const pageUrl = new URL(getRelativeLocaleUrl(lang), Astro.site).href;
 const djId = new URL("/#dj", Astro.site).href;
@@ -14,6 +14,13 @@ const zlin = { "@type": "City", name: "Zlín" };
 const zlinRegion = { "@type": "AdministrativeArea", name: "Zlínský kraj" };
 
 const upcomingTours = (await getTourDates()).filter((tour) => !isPastTour(tour));
+
+// "2026-12-31" -> "2027-01-01"
+function nextDay(isoDate: string): string {
+  const day = new Date(`${isoDate}T00:00:00Z`);
+  day.setUTCDate(day.getUTCDate() + 1);
+  return day.toISOString().slice(0, 10);
+}
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -56,7 +63,13 @@ const structuredData = {
     ...upcomingTours.map((tour) => ({
       "@type": "MusicEvent",
       name: `${tour.venue ?? tour.placeName} – DJ TOBINN`,
+      description: tourText.eventDescription
+        .replace("{event}", tour.venue ?? tour.placeName)
+        .replace("{place}", tour.placeName)
+        .replace("{city}", tour.locality),
       startDate: tour.isoDate,
+      // Only the day is known, and a night ends after midnight: the event ends the next day
+      endDate: nextDay(tour.isoDate),
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       image: imageUrl,
@@ -70,6 +83,15 @@ const structuredData = {
         },
       },
       performer: { "@id": djId },
+      ...(tour.organizer && { organizer: { "@type": "Organization", name: tour.organizer } }),
+      ...((tour.tickets || tour.price !== undefined) && {
+        offers: {
+          "@type": "Offer",
+          ...(tour.tickets && { url: tour.tickets }),
+          availability: "https://schema.org/InStock",
+          ...(tour.price !== undefined && { price: tour.price, priceCurrency: "CZK" }),
+        },
+      }),
     })),
   ],
 };

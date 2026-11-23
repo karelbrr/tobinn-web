@@ -61,6 +61,7 @@ const en = {
   tour: {
     heading: ["DATES"],
     past: "(PAST)",
+    eventDescription: "{event} with DJ TOBINN at {place}, {city}. House, dance and whitegirl music.",
   },
   audio: {
     heading: ["AUDIO", "ARCHIVE"],
@@ -138,6 +139,7 @@ const cs: typeof en = {
   tour: {
     heading: ["TERMÍNY"],
     past: "(PROBĚHLO)",
+    eventDescription: "{event} s DJ TOBINN, {place}, {city}. House, dance a whitegirl music.",
   },
   audio: {
     heading: ["AUDIO", "ARCHIV"],

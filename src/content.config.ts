@@ -8,6 +8,10 @@ const toursCollection = defineCollection({
     date: z.string(),
     city: z.string(),
     venue: z.string().optional(),
+    // Who runs the night, the ticket page and the entry price in CZK: only what the promoter really published; no page means tickets at the door
+    organizer: z.string().optional(),
+    tickets: z.string().url().optional(),
+    price: z.number().nonnegative().optional(),
   }),
 });
 
